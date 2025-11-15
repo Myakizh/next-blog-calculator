@@ -1,42 +1,5 @@
 import { Card } from "@/components/ui/card";
-
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-};
-
-type User = {
-  id: number;
-  name: string;
-};
-
-type Comment = {
-  id: number;
-  name: string;
-  email: string;
-  body: string;
-};
-
-async function getPost(id: string): Promise<Post> {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-  return res.json();
-}
-
-async function getComments(postId: string): Promise<Comment[]> {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
-  );
-  return res.json();
-}
-
-async function getUser(userId: number): Promise<User> {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${userId}`
-  );
-  return res.json();
-}
+import { getPost, getUser, getComments } from "@/lib/api";
 
 interface Props {
   params: { id: string } | Promise<{ id: string }>;

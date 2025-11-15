@@ -1,27 +1,6 @@
-import { Card } from "@/components/ui/card";
 import Link from "next/link";
-
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-};
-
-type User = {
-  id: number;
-  name: string;
-};
-
-async function getPosts(): Promise<Post[]> {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  return res.json();
-}
-
-async function getUsers(): Promise<User[]> {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
-  return res.json();
-}
+import { Card } from "@/components/ui/card";
+import { getPosts, getUsers } from "@/lib/api";
 
 export default async function BlogPage() {
   const [posts, users] = await Promise.all([getPosts(), getUsers()]);
