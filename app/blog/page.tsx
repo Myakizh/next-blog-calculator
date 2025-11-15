@@ -5,6 +5,12 @@ type Post = {
   id: number;
   title: string;
   body: string;
+  userId: number;
+};
+
+type User = {
+  id: number;
+  name: string;
 };
 
 async function getPosts(): Promise<Post[]> {
@@ -12,8 +18,14 @@ async function getPosts(): Promise<Post[]> {
   return res.json();
 }
 
+async function getUsers(): Promise<User[]> {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  return res.json();
+}
+
 export default async function BlogPage() {
-  const posts = await getPosts();
+  const [posts, users] = await Promise.all([getPosts(), getUsers()]);
+  const usersMap = new Map(users.map((user) => [user.id, user.name]));
 
   return (
     <div className="p-8 space-y-4">
@@ -24,6 +36,9 @@ export default async function BlogPage() {
             <Card className="p-4 hover:bg-gray-50 cursor-pointer">
               <h2 className="text-xl font-semibold">{post.title}</h2>
               <p className="text-gray-600 line-clamp-2">{post.body}</p>
+              <div className="text-right text-sm text-gray-500 mt-2">
+                Author: {usersMap.get(post.userId)}
+              </div>
             </Card>
           </Link>
         ))}
