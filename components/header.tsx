@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Header() {
@@ -12,6 +13,7 @@ export default function Header() {
           <Link href="/blog" className="hover:underline">
             Blog
           </Link>
+
           <Link href="/calculator" className="hover:underline">
             Calculator
           </Link>
