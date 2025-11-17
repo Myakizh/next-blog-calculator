@@ -1,5 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { getPost, getUser, getComments } from "@/lib/api";
+import { Suspense } from "react";
+import { getPost, getUser } from "@/lib/api";
+import Comments from "./comments";
+import CommentsSkeleton from "./comments-skeleton";
 
 interface Props {
   params: { id: string } | Promise<{ id: string }>;
@@ -10,7 +12,6 @@ export default async function PostPage({ params }: Props) {
 
   const post = await getPost(id);
   const author = await getUser(post.userId);
-  const comments = await getComments(id);
 
   return (
     <div className="p-8 space-y-8">
@@ -21,19 +22,9 @@ export default async function PostPage({ params }: Props) {
         </p>
         <p>{post.body}</p>
       </article>
-      <section>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">Comments</h2>
-        <div className="space-y-4">
-          {comments.map((comment) => (
-            <Card key={comment.id} className="gap-1 p-4">
-              <p>{comment.body}</p>
-              <p className="text-muted-foreground text-right">
-                {comment.email}
-              </p>
-            </Card>
-          ))}
-        </div>
-      </section>
+      <Suspense fallback={<CommentsSkeleton />}>
+        <Comments postId={post.id} />
+      </Suspense>
     </div>
   );
 }
