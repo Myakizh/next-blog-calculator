@@ -1,6 +1,6 @@
 import { Post, User, Comment } from "@/lib/types";
 
-const BASE_URL = "https://jsonplaceholder.typicode.com";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export async function getPost(id: string): Promise<Post> {
   const res = await fetch(`${BASE_URL}/posts/${id}`);
