@@ -13,18 +13,23 @@ export default async function PostPage({ params }: Props) {
   const comments = await getComments(id);
 
   return (
-    <div className="p-8 space-y-6">
-      <h1 className="text-3xl font-bold">{post.title}</h1>
-      <p className="text-gray-700">{post.body}</p>
-      <p className="text-sm text-gray-500 mt-2">Author: {author.name}</p>
-
+    <div className="p-8 space-y-8">
+      <article className="prose max-w-none">
+        <h1 className="mb-1">{post.title}</h1>
+        <p className="text-muted-foreground mt-0">
+          <strong>Author:</strong> {author.name}
+        </p>
+        <p>{post.body}</p>
+      </article>
       <section>
         <h2 className="text-2xl font-semibold mt-6 mb-4">Comments</h2>
         <div className="space-y-4">
           {comments.map((comment) => (
-            <Card key={comment.id} className="p-4">
-              <p className="font-semibold">{comment.email}</p>
-              <p className="text-gray-600">{comment.body}</p>
+            <Card key={comment.id} className="gap-1 p-4">
+              <p>{comment.body}</p>
+              <p className="text-muted-foreground text-right">
+                {comment.email}
+              </p>
             </Card>
           ))}
         </div>
