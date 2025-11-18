@@ -11,7 +11,9 @@ export default async function Comments({ postId }: { postId: number }) {
         {comments.map((comment) => (
           <Card key={comment.id} className="gap-1 p-4">
             <p>{comment.body}</p>
-            <p className="text-muted-foreground text-right">{comment.email}</p>
+            <p className="text-muted-foreground text-right text-sm">
+              {comment.email}
+            </p>
           </Card>
         ))}
       </div>

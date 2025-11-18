@@ -2,6 +2,12 @@ import { Suspense } from "react";
 import { getPost, getUser } from "@/lib/api";
 import Comments from "./comments";
 import CommentsSkeleton from "./comments-skeleton";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog page",
+  description: "Blog page with comments",
+};
 
 interface Props {
   params: { id: string } | Promise<{ id: string }>;

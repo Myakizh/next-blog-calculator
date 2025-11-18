@@ -1,4 +1,10 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy of test assignment project",
+};
 
 export default function PrivacyPage() {
   return (

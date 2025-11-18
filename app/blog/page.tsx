@@ -3,6 +3,13 @@ import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getPosts } from "@/lib/api";
+import { truncateText } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Page with blog cards",
+};
 
 export default async function BlogPage() {
   const posts = await getPosts();
@@ -28,7 +35,7 @@ export default async function BlogPage() {
               </h2>
 
               <p className="text-muted-foreground line-clamp-3 overflow-hidden wrap-break-word">
-                {post.body}
+                {truncateText(post.body, 100)}
               </p>
 
               <div className="mt-auto pt-4">

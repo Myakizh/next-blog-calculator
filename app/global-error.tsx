@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Error — Something went wrong",
+  title: "Error - Something went wrong",
   description: "A global error occurred",
 };
 

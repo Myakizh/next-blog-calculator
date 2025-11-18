@@ -4,6 +4,12 @@ import { Parser } from "expr-eval";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Calculator",
+  description: "Simple calculator page",
+};
 
 const CalculatorButton = ({
   value,
