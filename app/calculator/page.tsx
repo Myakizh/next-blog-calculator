@@ -1,16 +1,45 @@
 "use client";
 
+import { Parser } from "expr-eval";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
-export default function CalculatorPage() {
+const CalculatorButton = ({
+  value,
+  onClick,
+  variant = "secondary",
+  className = "",
+}: {
+  value: string;
+  onClick: (val: string) => void;
+  variant?: "secondary" | "info";
+  className?: string;
+}) => (
+  <Button
+    onClick={() => onClick(value)}
+    variant={variant}
+    className={className}
+  >
+    {value}
+  </Button>
+);
+
+export function Calculator() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | null>(null);
 
   const calculate = useCallback(() => {
+    const allowedChars = /^[0-9+\-*/.]+$/;
+    if (!allowedChars.test(input)) {
+      setResult("Error");
+      return;
+    }
+
     try {
-      const result = Function(`"use strict"; return (${input})`)();
-      setResult(result.toString());
+      const parser = new Parser();
+      const res = parser.evaluate(input);
+      setResult(res.toString());
     } catch {
       setResult("Error");
     }
@@ -24,25 +53,19 @@ export default function CalculatorPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const allowedKeys = "0123456789+-*/.";
-      if (allowedKeys.includes(e.key)) {
-        setInput((prev) => prev + e.key);
-      } else if (e.key === "Enter") {
-        calculate();
-      } else if (e.key === "Backspace") {
-        setInput((prev) => prev.slice(0, -1));
-      } else if (e.key.toLowerCase() === "c") {
-        clear();
-      }
+      if (allowedKeys.includes(e.key)) setInput((prev) => prev + e.key);
+      else if (e.key === "Enter") calculate();
+      else if (e.key === "Backspace") setInput((prev) => prev.slice(0, -1));
+      else if (e.key.toLowerCase() === "c") clear();
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [calculate, clear]);
 
-  const handleButtonClick = (value: string) => {
-    if (value === "C") clear();
-    else if (value === "=") calculate();
-    else setInput((prev) => prev + value);
+  const handleButtonClick = (val: string) => {
+    if (val === "C") clear();
+    else if (val === "=") calculate();
+    else setInput((prev) => prev + val);
   };
 
   const buttons = [
@@ -62,30 +85,43 @@ export default function CalculatorPage() {
     ".",
     "C",
     "+",
-    "=",
   ];
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow rounded">
-      <div className="mb-4 p-2 bg-gray-100 text-right text-xl font-mono min-h-10">
+    <Card className="max-w-md mx-auto p-4">
+      <div className="mb-2 p-2 bg-secondary text-right text-xl min-h-10 rounded">
         {input || "0"}
       </div>
       {result !== null && (
-        <div className="mb-4 p-2 bg-gray-200 text-right text-xl font-mono">
+        <div className="mb-4 p-2 bg-primary-info text-right text-xl rounded">
           = {result}
         </div>
       )}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-2 mb-2">
         {buttons.map((btn) => (
-          <Button
+          <CalculatorButton
             key={btn}
-            onClick={() => handleButtonClick(btn)}
-            className="py-2"
-          >
-            {btn}
-          </Button>
+            value={btn}
+            onClick={handleButtonClick}
+            variant={["/", "*", "-", "+"].includes(btn) ? "info" : "secondary"}
+          />
         ))}
       </div>
+      <CalculatorButton
+        value="="
+        onClick={handleButtonClick}
+        variant="info"
+        className="col-span-4 py-2"
+      />
+    </Card>
+  );
+}
+
+export default function CalculatorPage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Calculator</h1>
+      <Calculator />
     </div>
   );
 }
