@@ -19,10 +19,8 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         info: "bg-primary-info text-secondary-foreground hover:bg-secondary-info",
-        success:
-          "bg-green-500 text-primary-foreground hover:bg-primary/90 focus-visible:ring-green-300",
-        warning:
-          "bg-chart-4 text-primary-foreground hover:bg-primary/90 focus-visible:ring-chart-4",
+        success: "bg-success text-primary-foreground hover:bg-success/80",
+        warning: "bg-chart-4 text-primary-foreground hover:bg-chart-4/80",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

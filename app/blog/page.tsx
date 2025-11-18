@@ -26,7 +26,7 @@ export default async function BlogPage() {
               alt="Post image"
               width={400}
               height={200}
-              className="w-full aspect-[2/1] object-cover"
+              className="w-full aspect-2/1 object-cover"
             />
 
             <div className="p-4 flex flex-col flex-1">
@@ -34,7 +34,7 @@ export default async function BlogPage() {
                 {post.title}
               </h2>
 
-              <p className="text-muted-foreground line-clamp-3 overflow-hidden wrap-break-word">
+              <p className="text-muted-foreground max-h-20 line-clamp-3 overflow-hidden wrap-break-word">
                 {truncateText(post.body, 100)}
               </p>
 

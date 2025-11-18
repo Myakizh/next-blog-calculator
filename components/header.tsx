@@ -8,7 +8,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 w-full backdrop-blur-md bg-white/60 border-b z-50">
+    <header className="fixed top-0 w-full backdrop-blur-md bg-background/60 border-b z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <Link href="/" className="text-xl font-bold">
           BCLogo
@@ -32,7 +32,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className="md:hidden bg-white/80 backdrop-blur-md border-t px-4 py-3 flex flex-col gap-3 text-sm">
+        <nav className="md:hidden bg-background/80 backdrop-blur-md border-t px-4 py-3 flex flex-col gap-3 text-sm">
           <Link
             href="/blog"
             onClick={() => setOpen(false)}
