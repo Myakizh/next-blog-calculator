@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { Post, User, Comment } from "@/lib/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
@@ -20,6 +21,9 @@ export async function getUser(userId: number): Promise<User> {
 }
 
 export async function getPosts(): Promise<Post[]> {
+  "use cache";
+  cacheLife("blog");
+  await new Promise((resolve) => setTimeout(resolve, 1500));
   const res = await fetch(`${BASE_URL}/posts`);
   return res.json();
 }
