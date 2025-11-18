@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center py-20 text-center">
+    <div className="flex flex-col items-center justify-center py-20 text-center">
       <h1 className="text-4xl font-bold mb-4">
         Test Assignment: Next.js Blog & Calculator
       </h1>
@@ -31,6 +31,6 @@ export default function HomePage() {
           </Link>
         </Button>
       </div>
-    </main>
+    </div>
   );
 }

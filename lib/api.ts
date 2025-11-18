@@ -1,13 +1,16 @@
+import { cacheLife } from "next/cache";
 import { Post, User, Comment } from "@/lib/types";
 
-const BASE_URL = "https://jsonplaceholder.typicode.com";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export async function getPost(id: string): Promise<Post> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
   const res = await fetch(`${BASE_URL}/posts/${id}`);
   return res.json();
 }
 
-export async function getComments(postId: string): Promise<Comment[]> {
+export async function getComments(postId: number): Promise<Comment[]> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await fetch(`${BASE_URL}/comments?postId=${postId}`);
   return res.json();
 }
@@ -18,6 +21,9 @@ export async function getUser(userId: number): Promise<User> {
 }
 
 export async function getPosts(): Promise<Post[]> {
+  "use cache";
+  cacheLife("blog");
+  await new Promise((resolve) => setTimeout(resolve, 1500));
   const res = await fetch(`${BASE_URL}/posts`);
   return res.json();
 }

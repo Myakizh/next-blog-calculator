@@ -1,11 +1,17 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy of test assignment project",
+};
 
 export default function PrivacyPage() {
   return (
-    <main className="flex flex-col items-center justify-center py-20 px-4">
-      <Card className="max-w-2xl w-full">
+    <div className="flex flex-col items-center justify-center py-20 px-4">
+      <Card className="prose">
         <CardTitle className="text-center">Privacy Policy</CardTitle>
-        <CardContent className="space-y-4 text-sm text-muted-foreground">
+        <CardContent className="text-sm text-muted-foreground">
           <p>
             This is a simple test project, and no real user data is collected.
           </p>
@@ -24,6 +30,6 @@ export default function PrivacyPage() {
           </p>
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }
