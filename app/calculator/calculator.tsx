@@ -27,34 +27,59 @@ const CalculatorButton = ({
 
 export function Calculator() {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [history, setHistory] = useState<string | null>(null);
 
   const calculate = useCallback(() => {
     const allowedChars = /^[0-9+\-*/.]+$/;
     if (!allowedChars.test(input)) {
-      setResult("Error");
+      setInput("Error");
       return;
     }
 
     try {
       const parser = new Parser();
       const res = parser.evaluate(input);
-      setResult(res.toString());
+      setHistory(input);
+      setInput(res.toString());
     } catch {
-      setResult("Error");
+      setInput("Error");
     }
   }, [input]);
 
   const clear = useCallback(() => {
     setInput("");
-    setResult(null);
+    setHistory(null);
   }, []);
+
+  const canAppendChar = (current: string, next: string) => {
+    const operators = ["+", "-", "*", "/"];
+    const lastChar = current.slice(-1);
+
+    if (operators.includes(lastChar) && operators.includes(next)) return false;
+    if (
+      current === "0" &&
+      operators.includes(next) &&
+      next !== "-" &&
+      next !== "."
+    )
+      return false;
+    if (next === ".") {
+      const lastNumber = current.split(/[\+\-\*\/]/).pop();
+      if (lastNumber?.includes(".")) return false;
+    }
+
+    return true;
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const allowedKeys = "0123456789+-*/.";
-      if (allowedKeys.includes(e.key)) setInput((prev) => prev + e.key);
-      else if (e.key === "Enter") calculate();
+      if (allowedKeys.includes(e.key)) {
+        setInput((prev) => {
+          if (canAppendChar(prev, e.key)) return prev + e.key;
+          return prev;
+        });
+      } else if (e.key === "Enter") calculate();
       else if (e.key === "Backspace") setInput((prev) => prev.slice(0, -1));
       else if (e.key.toLowerCase() === "c") clear();
     };
@@ -65,6 +90,7 @@ export function Calculator() {
   const handleButtonClick = (val: string) => {
     if (val === "C") clear();
     else if (val === "=") calculate();
+    else if (!canAppendChar(input, val)) return;
     else setInput((prev) => prev + val);
   };
 
@@ -81,23 +107,23 @@ export function Calculator() {
     "2",
     "3",
     "-",
-    "0",
     ".",
+    "0",
     "C",
     "+",
   ];
 
   return (
     <Card className="max-w-md mx-auto p-4">
-      <div className="mb-2 p-2 bg-secondary text-right text-xl min-h-10 rounded">
-        {input || "0"}
+      <div className="mb-4 p-2 bg-secondary text-right rounded min-h-16 flex flex-col justify-center">
+        {history !== null && (
+          <div className="text-sm text-muted-foreground truncate">
+            {history}
+          </div>
+        )}
+        <div className="text-2xl">{input || "0"}</div>
       </div>
-      {result !== null && (
-        <div className="mb-4 p-2 bg-primary-info text-right text-xl rounded">
-          = {result}
-        </div>
-      )}
-      <div className="grid grid-cols-4 gap-2 mb-2">
+      <div className="grid grid-cols-4 gap-2">
         {buttons.map((btn) => (
           <CalculatorButton
             key={btn}
@@ -106,13 +132,13 @@ export function Calculator() {
             variant={["/", "*", "-", "+"].includes(btn) ? "info" : "secondary"}
           />
         ))}
+        <CalculatorButton
+          value="="
+          onClick={handleButtonClick}
+          variant="info"
+          className="col-span-4"
+        />
       </div>
-      <CalculatorButton
-        value="="
-        onClick={handleButtonClick}
-        variant="info"
-        className="col-span-4 py-2"
-      />
     </Card>
   );
 }

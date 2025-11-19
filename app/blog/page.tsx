@@ -15,18 +15,18 @@ export default async function BlogPage() {
   const posts = await getPosts();
 
   return (
-    <div className="p-8 space-y-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold mb-6">Blog</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {posts.map((post) => (
-          <Card key={post.id} className="overflow-hidden flex flex-col">
+          <Card key={post.id} className="overflow-hidden flex flex-col py-0">
             <Image
               src={`https://picsum.photos/seed/${post.id}/400/200`}
               alt="Post image"
               width={400}
               height={200}
-              className="w-full h-40 object-cover"
+              className="w-full aspect-2/1 object-cover"
             />
 
             <div className="p-4 flex flex-col flex-1">
@@ -34,7 +34,7 @@ export default async function BlogPage() {
                 {post.title}
               </h2>
 
-              <p className="text-muted-foreground line-clamp-3 overflow-hidden wrap-break-word">
+              <p className="text-muted-foreground max-h-20 line-clamp-3 overflow-hidden wrap-break-word">
                 {truncateText(post.body, 100)}
               </p>
 

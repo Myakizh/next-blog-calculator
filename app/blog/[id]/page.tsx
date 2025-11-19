@@ -20,7 +20,7 @@ export default async function PostPage({ params }: Props) {
   const author = await getUser(post.userId);
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <article className="prose max-w-none">
         <h1 className="mb-1">{post.title}</h1>
         <p className="text-muted-foreground mt-0">
