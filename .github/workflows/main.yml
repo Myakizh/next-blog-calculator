@@ -30,6 +30,8 @@ jobs:
         run: pnpm install
 
       - name: Build app
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
         run: pnpm run build
 
       - name: Semantic release
