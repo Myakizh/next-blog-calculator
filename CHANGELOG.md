@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Myakizh/next-blog-calculator/compare/v1.0.0...v1.1.0) (2026-01-21)
+
+
+### Features
+
+* test version update ([bc6ad02](https://github.com/Myakizh/next-blog-calculator/commit/bc6ad02a578c209a860df9efa3efb95253bc77dc))
+
 # 1.0.0 (2026-01-21)
 
 
