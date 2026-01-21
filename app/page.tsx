@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <h1 className="text-4xl font-bold mb-4">
-        Test Assignment: Next.js Blog & Calculator
+        Test Assignment: Next.js Blog & Calculator.
       </h1>
       <p className="text-muted-foreground mb-8 max-w-md">
         This project includes a blog section and a simple calculator. Use the
